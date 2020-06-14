@@ -5,27 +5,10 @@ provider "aws" {
 	region = "ap-south-1"
 	profile = "yogi"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 variable ssh_key_name {
 
         default = "keywithtf"
 }
-
-
-
 resource "tls_private_key" "key-pair" {
 
 	algorithm = "RSA"
@@ -85,9 +68,6 @@ resource "aws_security_group" "webserver" {
       		cidr_blocks = ["0.0.0.0/0"]
       	}
 }
-
-
-
 resource "aws_instance" "web" {
   ami           = "ami-0447a12f28fddb066"
   instance_type = "t2.micro"
@@ -115,12 +95,7 @@ resource "aws_instance" "web" {
 
 }
 
-
-
-
-
-
-	resource "aws_ebs_volume" "esb1" {
+resource "aws_ebs_volume" "esb1" {
 	  availability_zone = aws_instance.web.availability_zone
 	  size              = 1
 	  tags = {
@@ -145,13 +120,7 @@ resource "aws_instance" "web" {
 	  	}
 	}
 
-
-
-
-
-
-
-	resource "null_resource" "nullremote3"  {
+ resource "null_resource" "nullremote3"  {
 
 	depends_on = [
 	    aws_volume_attachment.ebs_att,
@@ -188,10 +157,7 @@ resource "aws_instance" "web" {
 
 
 
-
-
-
-	resource "aws_s3_bucket" "b" {
+        resource "aws_s3_bucket" "b" {
 	  bucket = "bucketfortask"
 	  acl    = "private"
 
@@ -304,13 +270,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   viewer_certificate {
     cloudfront_default_certificate = true
   }
-  
-
-
-
-
-
-  }
+}
 
 
 resource "null_resource" "nullremote4"  {
